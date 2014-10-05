@@ -4,6 +4,23 @@ elephuntgram
 Simple Instagram Feed Reader for PHP
 
 
+Usage
+-----
+
+Default Parameters
+
+  * token - Instagram token, good for 5000 requests an hour   
+  * limit - number of images to return
+  * start - HTML for start of instagram feed pull
+  * end - HTML for end of instagram feed pull
+  * itemstart - HTML before each Instagram <img> tag
+  * itemend - HTML after each Instagram <img> tag
+  * width - HTML <img width> attribute
+  * height - HTML <img height> attribute
+  * caption - TRUE or FALSE boolean, makes caption the ALT/TITLE text of the <img> tag
+  * link - TRUE or FALSE boolean, defaults to true. Wrap image in an A tag to Instagram link
+
+
 Notes
 -----
 To obtain the access token, paste this into your browser:

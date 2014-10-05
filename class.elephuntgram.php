@@ -25,7 +25,8 @@ $params = array(
   'itemend' => '</li>',
   'width' => '100',
   'height' => '100',
-  'caption' => false
+  'caption' => false,
+  'link' => true
 );
 
 function elephuntRequest($url){
@@ -46,19 +47,21 @@ function GetUserID($username, $access_token) {
   }
 } 
 
-function elephuntGram($params) {
-  $user = GetUserID($params['username'],$params['token']);
-  $result = elephuntRequest("https://api.instagram.com/v1/users/$user/media/recent/?access_token=".$params['token']);
+function elephuntGram($param) {
+  $user = GetUserID($param['username'],$param['token']);
+  $result = elephuntRequest("https://api.instagram.com/v1/users/$user/media/recent/?access_token=".$param['token']);
   $result = json_decode($result);
-  $string = $params['start'];
-  for ($x=0;$x<$params['limit'];$x++) {
-    $string .= $params['itemstart'];
-    $string .= '<img src="'.$result->data[$x]->images->standard_resolution->url.'" width="'.$params['width'].'" height="'.$params['height'].'" ';
-    if ($params['caption'] == true) $string .= 'title="'.$result->data[$x]->caption->text.'" alt="'.$result->data[$x]->caption->text.'" ';
+  $string = $param['start'];
+  for ($x=0;$x<$param['limit'];$x++) {
+    $string .= $param['itemstart'];
+    if ($param['link'] == true) $string .= '<a href="'.$result->data[$x]->link.'" target="_BLANK">';
+    $string .= '<img src="'.$result->data[$x]->images->standard_resolution->url.'" width="'.$param['width'].'" height="'.$param['height'].'" ';
+    if ($param['caption'] == true) $string .= 'title="'.$result->data[$x]->caption->text.'" alt="'.$result->data[$x]->caption->text.'" ';
     $string .= '/>';
-    $string .= $params['itemend'];
+    if ($link == true) $string .= '</a>';
+    $string .= $param['itemend'];
   }
-  $string .= $params['end'];
+  $string .= $param['end'];
   return $string;
 }
 
