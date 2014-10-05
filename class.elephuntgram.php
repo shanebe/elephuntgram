@@ -12,7 +12,8 @@ global $params;
  * width - HTML <img width> attribute
  * height - HTML <img height> attribute
  * caption - TRUE or FALSE boolean, makes caption the ALT/TITLE text of the <img> tag
-
+ * link - TRUE or FALSE boolean, defaults to true. Wrap image in an A tag to Instagram link
+ 
  (c)2014 Shane Bennett, @shanebe
 */
 
