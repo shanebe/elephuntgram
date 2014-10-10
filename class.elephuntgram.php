@@ -12,7 +12,8 @@ global $params;
  * width - HTML <img width> attribute
  * height - HTML <img height> attribute
  * caption - TRUE or FALSE boolean, makes caption the ALT/TITLE text of the <img> tag
- * link - TRUE or FALSE boolean, defaults to true. Wrap image in an A tag to Instagram link
+ * nosize - TRUE or FALSE boolean, if TRUE do not add any width or height tags to each instagram image
+ * noitemcontainer - TRUE or FALSE boolean, if TRUE do not use any start or end items around the instagram feed
  
  (c)2014 Shane Bennett, @shanebe
 */
@@ -27,6 +28,8 @@ $params = array(
   'width' => '100',
   'height' => '100',
   'caption' => false,
+  'nosize' => false,
+  'noitemcontainer' => false,
   'link' => true
 );
 
@@ -54,13 +57,20 @@ function elephuntGram($param) {
   $result = json_decode($result);
   $string = $param['start'];
   for ($x=0;$x<$param['limit'];$x++) {
-    $string .= $param['itemstart'];
+    if ($param['noitemcontainer'] != true) 
+      $string .= $param['itemstart'];
     if ($param['link'] == true) $string .= '<a href="'.$result->data[$x]->link.'" target="_BLANK">';
-    $string .= '<img src="'.$result->data[$x]->images->standard_resolution->url.'" width="'.$param['width'].'" height="'.$param['height'].'" ';
-    if ($param['caption'] == true) $string .= 'title="'.$result->data[$x]->caption->text.'" alt="'.$result->data[$x]->caption->text.'" ';
+    $string .= '<img src="'.$result->data[$x]->images->standard_resolution->url.'" ';
+    if ($param['nosize'] != true)
+      $string .= 'width="'.$param['width'].'" height="'.$param['height'].'" ';
+    if ($param['imgclass'] != '') 
+      $string .= 'class="'.$param['imgclass'].'" ';
+    if ($param['caption'] == true) 
+      $string .= 'title="'.htmlentities($result->data[$x]->caption->text).'" alt="'.htmlentities($result->data[$x]->caption->text).'" ';
     $string .= '/>';
-    if ($link == true) $string .= '</a>';
-    $string .= $param['itemend'];
+    if ($param['link'] == true) $string .= '</a>';
+    if ($param['noitemcontainer'] != true)
+      $string .= $param['itemend'];
   }
   $string .= $param['end'];
   return $string;
