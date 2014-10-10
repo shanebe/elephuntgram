@@ -20,7 +20,8 @@ Default Parameters
   * caption - TRUE or FALSE boolean, makes caption the ALT/TITLE text of the <img> tag
   * link - TRUE or FALSE boolean, defaults to true. Wrap image in an A tag to Instagram link
   * nosize - TRUE or FALSE boolean, if TRUE do not add any width or height tags to each instagram image
-  * noitemcontainer - TRUE or FALSE boolean, if TRUE do not use any *start or *end items around the instagram feed
+  * noitemcontainer - TRUE or FALSE boolean, if TRUE do not use any itemstart or itemend around the instagram feed
+  * nocontainer - TRUE or FALSE boolean, if TRUE do not use start or end around the instagram feed
   * imgclass - Define class for <img> tag
 
 Notes

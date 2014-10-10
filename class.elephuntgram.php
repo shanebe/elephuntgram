@@ -13,7 +13,8 @@ global $params;
  * height - HTML <img height> attribute
  * caption - TRUE or FALSE boolean, makes caption the ALT/TITLE text of the <img> tag
  * nosize - TRUE or FALSE boolean, if TRUE do not add any width or height tags to each instagram image
- * noitemcontainer - TRUE or FALSE boolean, if TRUE do not use any *start or *end items around the instagram feed
+ * noitemcontainer - TRUE or FALSE boolean, if TRUE do not use any itemstart or itemend around the instagram feed
+ * nocontainer - TRUE or FALSE boolean, if TRUE do not use start or end around the instagram feed
  * imgclass - Define class for <img> tag
  
  (c)2014 Shane Bennett, @shanebe
@@ -31,6 +32,7 @@ $params = array(
   'caption' => false,
   'nosize' => false,
   'noitemcontainer' => false,
+  'nocontainer' => false,
   'link' => true,
   'imgclass' => ''
 );
@@ -58,7 +60,7 @@ function elephuntGram($param) {
   $result = elephuntRequest("https://api.instagram.com/v1/users/$user/media/recent/?access_token=".$param['token']);
   $result = json_decode($result);
   $string = '';
-  if ($param['noitemcontainer'] != true)
+  if ($param['nocontainer'] != true)
     $string = $param['start'];
   for ($x=0;$x<$param['limit'];$x++) {
     if ($param['noitemcontainer'] != true) 
@@ -76,7 +78,7 @@ function elephuntGram($param) {
     if ($param['noitemcontainer'] != true)
       $string .= $param['itemend'];
   }
-  if ($param['noitemcontainer'] != true)
+  if ($param['nocontainer'] != true)
     $string .= $param['end'];
   return $string;
 }
