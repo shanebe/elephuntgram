@@ -23,7 +23,10 @@ Default Parameters
   * noitemcontainer - TRUE or FALSE boolean, if TRUE do not use any itemstart or itemend around the instagram feed
   * nocontainer - TRUE or FALSE boolean, if TRUE do not use start or end around the instagram feed
   * imgclass - Define class for <img> tag
-
+  * link - Variable "instagram" links to instagram, "fancybox" or "none"
+  * fancyboxtitle - TRUE or FALSE boolean, only used with "fancybox" link
+  * rel - HTML <a> rel attribute. Used with "instagram" or "fancybox" link only
+ 
 Notes
 -----
 To obtain the access token, paste this into your browser:

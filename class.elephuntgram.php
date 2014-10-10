@@ -16,6 +16,9 @@ global $params;
  * noitemcontainer - TRUE or FALSE boolean, if TRUE do not use any itemstart or itemend around the instagram feed
  * nocontainer - TRUE or FALSE boolean, if TRUE do not use start or end around the instagram feed
  * imgclass - Define class for <img> tag
+ * link - Variable "instagram" links to instagram, "fancybox" or "none"
+ * fancyboxtitle - TRUE or FALSE boolean, only used with "fancybox" link
+ * rel - HTML <a> rel attribute. Used with "instagram" or "fancybox" link only
  
  (c)2014 Shane Bennett, @shanebe
 */
@@ -33,7 +36,9 @@ $params = array(
   'nosize' => false,
   'noitemcontainer' => false,
   'nocontainer' => false,
-  'link' => true,
+  'link' => 'instagram',
+  'rel' => '',
+  'fancyboxtitle' => true,
   'imgclass' => ''
 );
 
@@ -65,7 +70,13 @@ function elephuntGram($param) {
   for ($x=0;$x<$param['limit'];$x++) {
     if ($param['noitemcontainer'] != true) 
       $string .= $param['itemstart'];
-    if ($param['link'] == true) $string .= '<a href="'.$result->data[$x]->link.'" target="_BLANK">';
+    if ($param['link'] != 'none') {
+      if ($param['link'] == 'instagram') $string .= '<a href="'.$result->data[$x]->link.'" target="_BLANK" ';
+      elseif ($param['link'] == "fancybox") $string .= '<a href="'.$result->data[$x]->images->standard_resolution->url.'" ';
+      if ($param['fancyboxtitle'] == true) $string .= 'title="'.htmlentities($result->data[$x]->caption->text).'" ';
+      if ($param['rel'] != '') $string .= 'rel="'.$param['rel'].'" ';
+      $string .= '>';
+    }
     $string .= '<img src="'.$result->data[$x]->images->standard_resolution->url.'" ';
     if ($param['nosize'] != true)
       $string .= 'width="'.$param['width'].'" height="'.$param['height'].'" ';
@@ -74,7 +85,7 @@ function elephuntGram($param) {
     if ($param['caption'] == true) 
       $string .= 'title="'.htmlentities($result->data[$x]->caption->text).'" alt="'.htmlentities($result->data[$x]->caption->text).'" ';
     $string .= '/>';
-    if ($param['link'] == true) $string .= '</a>';
+    if ($param['link'] != 'none') $string .= '</a>';
     if ($param['noitemcontainer'] != true)
       $string .= $param['itemend'];
   }
