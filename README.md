@@ -24,7 +24,8 @@ Default Parameters
   * nocontainer - TRUE or FALSE boolean, if TRUE do not use start or end around the instagram feed
   * imgclass - Define class for <img> tag
   * link - Variable "instagram" links to instagram, "fancybox" or "none"
-  * fancyboxtitle - TRUE or FALSE boolean, only used with "fancybox" link
+  * fancyboxtitle - TRUE or FALSE boolean, only used with "fancybox" link, adds caption to fancybox title
+  * fancyboxlink - TRUE or FALSE boolean, only used with "fancybox" link and "fancyboxtitle=true", adds URL to caption as link
   * rel - HTML <a> rel attribute. Used with "instagram" or "fancybox" link only
  
 Notes

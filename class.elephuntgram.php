@@ -17,7 +17,8 @@ global $params;
  * nocontainer - TRUE or FALSE boolean, if TRUE do not use start or end around the instagram feed
  * imgclass - Define class for <img> tag
  * link - Variable "instagram" links to instagram, "fancybox" or "none"
- * fancyboxtitle - TRUE or FALSE boolean, only used with "fancybox" link
+ * fancyboxtitle - TRUE or FALSE boolean, only used with "fancybox" link, adds caption to fancybox title
+ * fancyboxlink - TRUE or FALSE boolean, only used with "fancybox" link and "fancyboxtitle=true", adds URL to caption as link
  * rel - HTML <a> rel attribute. Used with "instagram" or "fancybox" link only
  
  (c)2014 Shane Bennett, @shanebe
@@ -39,6 +40,7 @@ $params = array(
   'link' => 'instagram',
   'rel' => '',
   'fancyboxtitle' => true,
+  'fancyboxlink' => false,
   'imgclass' => ''
 );
 
@@ -65,9 +67,10 @@ function elephuntGram($param) {
   $result = elephuntRequest("https://api.instagram.com/v1/users/$user/media/recent/?access_token=".$param['token']);
   $result = json_decode($result);
   $string = '';
-  if ($param['nocontainer'] != true)
+ if ($param['nocontainer'] != true)
     $string = $param['start'];
   for ($x=0;$x<$param['limit'];$x++) {
+    if ($param['fancyboxlink'] == true) $result->data[$x]->caption->text .= ' <a href="'.$result->data[$x]->link.'" target="_BLANK">'.$result->data[$x]->link.'</a>';
     if ($param['noitemcontainer'] != true) 
       $string .= $param['itemstart'];
     if ($param['link'] != 'none') {
@@ -77,7 +80,7 @@ function elephuntGram($param) {
       if ($param['rel'] != '') $string .= 'rel="'.$param['rel'].'" ';
       $string .= '>';
     }
-    $string .= '<img src="'.$result->data[$x]->images->standard_resolution->url.'" ';
+   $string .= '<img src="'.$result->data[$x]->images->standard_resolution->url.'" ';
     if ($param['nosize'] != true)
       $string .= 'width="'.$param['width'].'" height="'.$param['height'].'" ';
     if ($param['imgclass'] != '') 
