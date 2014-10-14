@@ -16,10 +16,11 @@ global $params;
  * noitemcontainer - TRUE or FALSE boolean, if TRUE do not use any itemstart or itemend around the instagram feed
  * nocontainer - TRUE or FALSE boolean, if TRUE do not use start or end around the instagram feed
  * imgclass - Define class for <img> tag
- * link - Variable "instagram" links to instagram, "fancybox" or "none"
- * fancyboxtitle - TRUE or FALSE boolean, only used with "fancybox" link, adds caption to fancybox title
- * fancyboxlink - TRUE or FALSE boolean, only used with "fancybox" link and "fancyboxtitle=true", adds URL to caption as link
- * rel - HTML <a> rel attribute. Used with "instagram" or "fancybox" link only
+ * link - Variable "instagram" links to instagram, "image" wraps it in an A tag or "none"
+ * linktitle - TRUE or FALSE boolean, only used with "image" link, adds caption to fancybox title
+ * linktitleurl - TRUE or FALSE boolean, only used with "image" link and "linktitle=true", adds URL to caption as link
+ * linkclass - Define <A> tag class name, only used with "image" link
+ * rel - HTML <a> rel attribute. Used with "instagram" or "image" link only
  
  (c)2014 Shane Bennett, @shanebe
 */
@@ -39,8 +40,9 @@ $params = array(
   'nocontainer' => false,
   'link' => 'instagram',
   'rel' => '',
-  'fancyboxtitle' => true,
-  'fancyboxlink' => false,
+  'linktitle' => true,
+  'linktitleurl' => false,
+  'linkclass' => '',
   'imgclass' => ''
 );
 
@@ -70,14 +72,19 @@ function elephuntGram($param) {
  if ($param['nocontainer'] != true)
     $string = $param['start'];
   for ($x=0;$x<$param['limit'];$x++) {
-    if ($param['fancyboxlink'] == true) $result->data[$x]->caption->text .= ' <a href="'.$result->data[$x]->link.'" target="_BLANK">'.$result->data[$x]->link.'</a>';
-    if ($param['noitemcontainer'] != true) 
+    if ($param['linktitleurl'] == true) {
+      $fancylink = $result->data[$x]->caption->text . ' <a href="'.$result->data[$x]->link.'" target="_BLANK">'.$result->data[$x]->link.'</a>';
+    } else {
+      $fancylink = $result->data[$x]->caption->text;
+    }
+      if ($param['noitemcontainer'] != true) 
       $string .= $param['itemstart'];
-    if ($param['link'] != 'none') {
+    if ( ($param['link'] == 'instagram') || ($param['link'] == 'image') ) {
       if ($param['link'] == 'instagram') $string .= '<a href="'.$result->data[$x]->link.'" target="_BLANK" ';
-      elseif ($param['link'] == "fancybox") $string .= '<a href="'.$result->data[$x]->images->standard_resolution->url.'" ';
-      if ($param['fancyboxtitle'] == true) $string .= 'title="'.htmlentities($result->data[$x]->caption->text).'" ';
+      elseif ($param['link'] == "image") $string .= '<a href="'.$result->data[$x]->images->standard_resolution->url.'" ';
+      if ($param['linktitle'] == true) $string .= 'title="'.htmlentities($fancylink).'" ';
       if ($param['rel'] != '') $string .= 'rel="'.$param['rel'].'" ';
+      if ($param['linkclass'] != '') $string .= 'class="'.$param['linkclass'].'" ';
       $string .= '>';
     }
    $string .= '<img src="'.$result->data[$x]->images->standard_resolution->url.'" ';
@@ -86,9 +93,10 @@ function elephuntGram($param) {
     if ($param['imgclass'] != '') 
       $string .= 'class="'.$param['imgclass'].'" ';
     if ($param['caption'] == true) 
-      $string .= 'title="'.htmlentities($result->data[$x]->caption->text).'" alt="'.htmlentities($result->data[$x]->caption->text).'" ';
+      $string .= 'title="'.htmlentities($result->data[$x]->caption->text).'" alt="'.strip_tags(htmlentities($result->data[$x]->caption->text),'<br><br /><p>').'" ';
+    elseif ($param['linktitle'] == true) $string .= 'title="" alt="" ';
     $string .= '/>';
-    if ($param['link'] != 'none') $string .= '</a>';
+    if ( ($param['link'] == 'image') || ($param['link'] == "instagram") ) $string .= '</a>';
     if ($param['noitemcontainer'] != true)
       $string .= $param['itemend'];
   }
@@ -96,5 +104,4 @@ function elephuntGram($param) {
     $string .= $param['end'];
   return $string;
 }
-
 ?>

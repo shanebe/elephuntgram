@@ -8,25 +8,25 @@ Usage
 -----
 
 Default Parameters
-
-  * token - Instagram token, good for 5000 requests an hour   
-  * limit - number of images to return
-  * start - HTML for start of instagram feed pull
-  * end - HTML for end of instagram feed pull
-  * itemstart - HTML before each Instagram <img> tag
-  * itemend - HTML after each Instagram <img> tag
-  * width - HTML <img width> attribute
-  * height - HTML <img height> attribute
-  * caption - TRUE or FALSE boolean, makes caption the ALT/TITLE text of the <img> tag
-  * link - TRUE or FALSE boolean, defaults to true. Wrap image in an A tag to Instagram link
-  * nosize - TRUE or FALSE boolean, if TRUE do not add any width or height tags to each instagram image
-  * noitemcontainer - TRUE or FALSE boolean, if TRUE do not use any itemstart or itemend around the instagram feed
-  * nocontainer - TRUE or FALSE boolean, if TRUE do not use start or end around the instagram feed
-  * imgclass - Define class for <img> tag
-  * link - Variable "instagram" links to instagram, "fancybox" or "none"
-  * fancyboxtitle - TRUE or FALSE boolean, only used with "fancybox" link, adds caption to fancybox title
-  * fancyboxlink - TRUE or FALSE boolean, only used with "fancybox" link and "fancyboxtitle=true", adds URL to caption as link
-  * rel - HTML <a> rel attribute. Used with "instagram" or "fancybox" link only
+ 
+ * token - Instagram token, good for 5000 requests an hour
+ * limit - number of images to return
+ * start - HTML for start of instagram feed pull
+ * end - HTML for end of instagram feed pull
+ * itemstart - HTML before each Instagram <img> tag
+ * itemend - HTML after each Instagram <img> tag
+ * width - HTML <img width> attribute
+ * height - HTML <img height> attribute
+ * caption - TRUE or FALSE boolean, makes caption the ALT/TITLE text of the <img> tag
+ * nosize - TRUE or FALSE boolean, if TRUE do not add any width or height tags to each instagram image
+ * noitemcontainer - TRUE or FALSE boolean, if TRUE do not use any itemstart or itemend around the instagram feed
+ * nocontainer - TRUE or FALSE boolean, if TRUE do not use start or end around the instagram feed
+ * imgclass - Define class for <img> tag
+ * link - Variable "instagram" links to instagram, "image" wraps it in an A tag or "none"
+ * linktitle - TRUE or FALSE boolean, only used with "image" link, adds caption to fancybox title
+ * linktitleurl - TRUE or FALSE boolean, only used with "image" link and "linktitle=true", adds URL to caption as link
+ * linkclass - Define <A> tag class name, only used with "image" link
+ * rel - HTML <a> rel attribute. Used with "instagram" or "image" link only
  
 Notes
 -----
